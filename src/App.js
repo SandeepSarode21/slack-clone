@@ -1,6 +1,6 @@
 import "./App.css";
 import Header from "./Header";
-import SideBar from "./SideBar";
+import Sidebar from "./Sidebar";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Header />
 
       <div className="app__body">
-        <SideBar />
+        <Sidebar />
         {/*SideBar*/}
         {/*React router -> Chat Screen*/}
       </div>
