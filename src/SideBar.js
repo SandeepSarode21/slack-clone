@@ -14,12 +14,12 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import db from "./firebase.js";
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs, onSnapshot } from "firebase/firestore";
 
 function Sidebar() {
   const [channels, setChannels] = useState([]);
   useEffect(() => {
-    async function fetchData() {
+    /*async function fetchData() {
       const rooms = collection(db, "rooms");
       const snapshot = await getDocs(rooms);
       setChannels(
@@ -29,7 +29,15 @@ function Sidebar() {
         }))
       );
     }
-    fetchData();
+    fetchData();*/
+    onSnapshot(collection(db, "rooms"), (snapshot) => {
+      setChannels(
+        snapshot.docs.map((doc) => ({
+          name: doc.data().name,
+          id: doc.id,
+        }))
+      );
+    });
   }, []);
 
   return (
@@ -55,11 +63,16 @@ function Sidebar() {
       <hr />
       <SidebarOption Icon={ExpandMoreIcon} title="Channels" />
       <hr />
-      <SidebarOption Icon={AddIcon} title="Add Channels" />
+      <SidebarOption
+        Icon={AddIcon}
+        title="Add Channels"
+        id="add"
+        addChannelOption="add"
+      />
       {/**connect to db and list all channnels */}
 
       {channels.map((channel) => (
-        <SidebarOption title={channel.name} id={channel.id} />
+        <SidebarOption title={channel.name} key={channel.id} id={channel.id} />
       ))}
     </div>
   );
