@@ -13,6 +13,7 @@ import {
   orderBy,
 } from "firebase/firestore";
 import Message from "./Message.js";
+import ChatInput from "./ChatInput.js";
 
 function Chat() {
   const { roomId } = useParams();
@@ -57,16 +58,17 @@ function Chat() {
         </div>
       </div>
       <div className="chat__messages">
-        {roomMessages.map(({ message, timestamp, user, userimage }) => (
+        {roomMessages.map(({ id, message, timestamp, user, userimage }) => (
           <Message
             message={message}
             timestamp={timestamp}
             user={user}
             userimage={userimage}
-            key={user}
+            key={id}
           />
         ))}
       </div>
+      <ChatInput channelName={roomDetails?.name} channelId={roomId} />
     </div>
   );
 }

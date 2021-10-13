@@ -15,9 +15,11 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AddIcon from "@material-ui/icons/Add";
 import db from "./firebase.js";
 import { collection, getDocs, onSnapshot } from "firebase/firestore";
+import { useStateValue } from "./StateProvider";
 
 function Sidebar() {
   const [channels, setChannels] = useState([]);
+  const [{ user }] = useStateValue();
   useEffect(() => {
     /*async function fetchData() {
       const rooms = collection(db, "rooms");
@@ -47,7 +49,7 @@ function Sidebar() {
           <h2>Programmer</h2>
           <h3>
             <FiberManualRecordIcon />
-            Sandeep Sarode
+            {user?.displayName}
           </h3>
         </div>
         <CreateIcon />
